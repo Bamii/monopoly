@@ -1,0 +1,65 @@
+[
+  {
+    "owner": null,
+    "title": "",
+    "location_code": "01",
+    "type": "property",
+    "lot_size": 3,
+    "price": {
+      "self": 60,
+      "house": 50,
+      "hotel": 50
+    },
+    "mortgage": "30",
+    "rent": {
+      "base": 2,
+      "monopoly": 4,
+      "house": {
+        "1": 10,
+        "2": 30,
+        "3": 90,
+        "4": 160
+      },
+      "hotel": {
+        "1": 250
+      }
+    },
+    "position": [0,0]
+  },
+  
+  
+  {
+    "owner": null,
+    "title": "",
+    "location_code": "05",
+    "type": "station",
+    "price": 200,
+    "mortgage": 100,
+    "rent": {
+      "monopoly": {
+        "1": 25,
+        "2": 50,
+        "3": 100,
+        "4": 200
+      }
+    },
+    "position": [1,0]
+  },
+
+
+  {
+    "owner": null,
+    "title": "",
+    "location_code": "06",
+    "type": "utility",
+    "price": 150,
+    "mortgage": 75,
+    "rent": {
+      "multiplier": {
+        "1": 4,
+        "2": 10
+      }
+    },
+    "position": [2,0]
+  }
+]
