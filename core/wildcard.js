@@ -9,6 +9,35 @@
 // namely:
 // - the information on the card
 // - type of card (CHANCE/COMMUNITY CHEST)
-// - their current cards (properties, and wildcards),
-// - their current cash,
-// - their built properties
+// - the text on the card,
+// - the action on the card
+
+class Wildcard {
+  constructor() {
+
+  }
+}
+
+// ---
+// chance
+// ---
+class Chance extends Wildcard {
+  constructor() {
+    super();
+  }
+}
+
+
+// ---
+// community chest
+// ---
+class CommunityChest extends Wildcard {
+  constructor(){
+    super();
+  }
+}
+
+module.exports = {
+  Chance,
+  CommunityChest
+}

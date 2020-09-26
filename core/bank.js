@@ -14,7 +14,11 @@
 // the bank can perform these following actions
 //    - disburseCash(players)
 //    - payPlayer()
-//    - 
+//    - mortgage()
+//    - unMortgage()
+//    - updateCash()
+//    - getTotalCash()
+//    - getProperties()
 
 const Property = require('./property');
 const Cash = require('./cash');
@@ -50,11 +54,27 @@ module.exports = class Bank {
     return this._mortgages.push(property);
   }
 
+  unMortgage() {
+
+  }
+
   getProperties() {
     return this._properties;
   }
 
-  disburseCash(player) {
+  disburseCash(player, ruleset) {
     
+  }
+
+  getTotalCash() {
+
+  }
+
+  updateCash() {
+
+  }
+
+  payPlayer() {
+
   }
 }

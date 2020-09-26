@@ -45,16 +45,17 @@
 //    - buildDevelopment.
 //    - demolishDevelopment.
 //    - getDevelopments.
-//
+//    - getMortgageStatus
 
 const MAX_HOUSE_ON_PROPERTY = 4;
 const { is } = require('./utils');
 
 module.exports = class Property{
   constructor(options) {
-    const { owner, position, type, location_code, title, ...details } = options;
+    const { owner, id, position, type, location_code, title, ...details } = options;
 
     this._owner = owner;
+    this._id = id;
     this._title = title;
     this._location_code = location_code;
     this._details = details;
@@ -159,5 +160,9 @@ module.exports = class Property{
 
   getDevelopments() {
     return this._developments;
+  }
+
+  getMortgageStatus() {
+    return this._isMortgage;
   }
 }

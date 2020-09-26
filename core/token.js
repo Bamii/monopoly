@@ -11,7 +11,7 @@
 //    - image (optional).
 //    - token_id
 
-module.exports = class Bank {
+module.exports = class Token {
   constructor(token) {
     this._tokenName  = token;
     this._tokenId = 0;

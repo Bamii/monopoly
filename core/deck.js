@@ -7,6 +7,19 @@
 // ---
 // this is the deck object. it will contain every information about the deck of cards
 // namely:
-//      - a function that returne the values of the two dice.
+//    - the cards in that deck.
+// ---
+// the deck should be able to perform these following operations
+//    - shuffle the cards.
 
-// (i intend for this function to be able to be used in card games too)
+// NB: i intend for this class to be able to be used in card games too.
+
+module.exports = class Deck {
+  constructor(cards) {
+    this._cards = [...cards];
+  }
+
+  shuffle() {
+    return this._cards;
+  }
+}
