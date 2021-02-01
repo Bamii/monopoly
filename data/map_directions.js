@@ -20,6 +20,7 @@
 // i think i'll go with this alternative... it's way lighter
 // - still keeping this file though. 
 // ---
+// mehh... i can use a simple loop for this.
 module.exports = [
   [10, 10],
   [10, 9],

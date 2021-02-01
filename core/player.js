@@ -37,6 +37,7 @@
 //    - hasTurnToMiss() -> Boolean.
 //    - getPosition() -> <Integer>[x,y]
 //    - getToken() -> Token
+const Dice = require('./dice')
 
 module.exports = class Player {
   constructor(options) {
@@ -52,13 +53,107 @@ module.exports = class Player {
     this._wildcards = [];
   }
 
-  move(steps) {}
+  move(steps) {
+    // logic to move the player's position;
+    const [x, y] =  this._position;
+    let rem; // remainder
 
-  purchase(property){}
+    if (x == 10) {
+      rem = y + steps;
+      if (rem > 10) {
+        this._position = [10-(rem-10), 10];
+      } else {
+        this._position = [10, rem]
+      }
+    }
+
+    if (y == 10) {
+      rem = x - steps;
+      if (rem < 0) {
+        this._position = [0, 10+rem]
+      } else {
+        this._position = [rem, 10]
+      }
+    }
+
+    if (x == 0) {
+      rem = y - steps;
+      if (rem < 0) {
+        this._position = [0-rem, 0]
+      } else {
+        this._position = [0, rem]
+      }
+    }
+
+    if (y == 0) {
+      rem = x + steps;
+      if (rem > 10) {
+        this._position = [10, rem-10]
+      } else {
+        this._position = [rem, 0]
+      }
+    }
+
+    return this._position;
+  }
+
+  rollDiceAndMove() {
+    const [a, b] = Dice.roll();
+    const total = a+b;
+
+    return [
+      [a,b],
+      this.move(total)
+    ];
+  }
+
+  purchase(property, owner){
+    const price = property.getPrice();
+    this.remitCash(price);
+    owner.receiveCash(price);
+    property.changeOwner(this);
+    this._properties.push(property);
+    owner.removeProperty(property);
+
+    // returns boolean to determine if it succeeds.
+  }
+
+  remitCash(amount) {
+    // remove some amount of cash
+  }
+
+  receiveCash(amount) {
+    // add some cash to their thingy
+  }
+
+  mortgage(property){
+
+  }
+
+  unMortgage(property){
+
+  }
+
+  isInJail(){
+    return this._inJail;
+  }
+
+  getName(){
+    return this._name;
+  }
+
+  drawCard(type, bank){
+    const drawnCard = bank.drawCard(type);
+
+    this.decodeCard(drawnCard);
+  }
+
+  decodeCard(card) {
+
+  }
+
   payRent(property){}
   develop(property, amount){}
-  mortgage(property){}
-  liftMortgage(property){}
   sell(property, buyer){}
   processMove(property){}
 
@@ -68,8 +163,10 @@ module.exports = class Player {
   getTotalCash(){}
   updateCash(amount, action){}
   getProperties(){}
-  isInJail(){}
   hasTurnToMiss(){}
-  getPosition(){}
   getToken(){}
+
+  getPosition(){
+    return this._position;
+  }
 }

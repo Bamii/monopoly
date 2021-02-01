@@ -1,6 +1,7 @@
+const describe = require('mocha').describe;
 const { Chance, CommunityChest } = require('../core/wildcard');
 
-test('CHANCE CARD TEST -->', () => {
+desct('CHANCE CARD TEST -->', () => {
   test('', () => {
 
   });

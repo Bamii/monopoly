@@ -31,14 +31,14 @@ module.exports = class Bank {
     this._wildcards = [];
     this._mortgages = [];
 
-    this.init(properties, cash);
+    this._init(properties, cash);
   }
 
-  init(properties, cash) {
+  _init(properties, cash) {
     // setup cash.
     Object.entries(cash).forEach(([note, frequency]) => {
       for(let x = 0; x < frequency; x++) {
-        this._cash.push(new Cash(note));
+        // this._cash.push(new Cash(note));
       }
     });
 
@@ -70,11 +70,16 @@ module.exports = class Bank {
 
   }
 
-  updateCash() {
+  remitCash(amount) {
 
   }
 
-  payPlayer() {
+  receiveCash(amount) {
 
+  }
+
+  payPlayer(player, amount) {
+    this.remitCash(amount);
+    player.receiveCash(amount);
   }
 }

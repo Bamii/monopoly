@@ -10,14 +10,14 @@
 // - a function that returne the values of the two dice.
 
 module.exports = class Dice {
-  roll() {
+  static roll() {
     return [
       this.generateRandomNumber(),
       this.generateRandomNumber()
     ]
   }
 
-  generateRandomNumber(min = 1, max = 6) {
+  static generateRandomNumber(min = 1, max = 6) {
     return Math.ceil(Math.random() * (max - min) + min);
   }
 }

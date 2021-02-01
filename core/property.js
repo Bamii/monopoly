@@ -95,6 +95,7 @@ module.exports = class Property{
       default:
         break;
     }
+    return true;
   }
 
   toggleMortgage() {
@@ -104,7 +105,7 @@ module.exports = class Property{
 
   toggleSale() {
     this._isForSale = !this._isForSale;
-    return;
+    return true;
   }
 
   buildDevelopment(developmentType, count = 1) {
@@ -120,8 +121,9 @@ module.exports = class Property{
 
     const [oldType, oldCount] = this._developments;
     const totalCount = oldCount + count;
-    if((developmentType == 'house' && oldType === 'hotel') ||
-    (developmentType == 'hotel' && oldType === 'hotel')
+    if(
+      (developmentType == 'house' && oldType === 'hotel') ||
+      (developmentType == 'hotel' && oldType === 'hotel')
     ) {
       return false;
     }
@@ -142,10 +144,10 @@ module.exports = class Property{
   }
 
   demolishDevelopment(factor = 1) {
-    const { _developments } = this;
-    const [type, count] = _developments;
+    const [type, count] = this._developments;
     if (type === 'hotel') {
       _developments = ['house', 4];
+      return true;
     }
 
     if (type === 'house') {
@@ -155,7 +157,9 @@ module.exports = class Property{
       } else {
         _developments = ['house', diff];
       }
+      return true;
     }
+    return false;
   }
 
   getDevelopments() {
@@ -164,5 +168,18 @@ module.exports = class Property{
 
   getMortgageStatus() {
     return this._isMortgage;
+  }
+
+  getOwner() {
+    return this._owner;
+  }
+
+  changeOwner(owner) {
+    this._owner = owner;
+    return this._owner;
+  }
+
+  getPrice() {
+    return this._details.price.self;
   }
 }

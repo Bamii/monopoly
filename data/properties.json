@@ -2,9 +2,12 @@
   {
     "owner": null,
     "title": "",
-    "location_code": "01",
+    "location_details": {
+      "code": "01",
+      "lot_size": 3,
+      "lot_color": "blue"
+    },
     "type": "property",
-    "lot_size": 3,
     "price": {
       "self": 60,
       "house": 50,
