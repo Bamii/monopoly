@@ -1,0 +1,85 @@
+[
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "03"
+    },
+    "type": "chance",
+    "position": [
+      [0,2],
+      [6,10],
+      [10,3]
+    ]
+  },
+
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "02"
+    },
+    "type": "community-chest",
+    "position": [
+      [3,10],
+      [10,8],
+      [3,0]
+    ]
+  },
+
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "01"
+    },
+    "type": "go",
+    "position": [10,10]
+  },
+
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "07"
+    },
+    "type": "goto-jail",
+    "position": [0,10]
+  },
+
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "16"
+    },
+    "type": "free-parking",
+    "position": [0,0]
+  },
+
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "17"
+    },
+    "type": "just-visiting",
+    "position": [10,0]
+  },
+  
+  {
+    "owner": null,
+    "title": "",
+    "location_details": {
+      "code": "04"
+    },
+    "type": "tax",
+    "rent": {
+      "base": 2
+    },
+    "position": [
+      [8,10],
+      [10,6]
+    ]
+  }
+]

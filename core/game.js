@@ -32,14 +32,16 @@
 // | --   --   --   --   --   --   --   --   --   --   -- |
 // | 10 |    |    |    |    |    |    |    |    |    | 15 |
 // | --   --   --   --   --   --   --   --   --   --   -- |
-// | 17 | 05 | 05 | 03 | 09 | 05 | 04 | 08 | 02 | 08 | 01 |
+// | 17 | 09 | 03 | 09 | 09 | 05 | 04 | 08 | 02 | 08 | 01 |
 // | --   --   --   --   --   --   --   --   --   --   -- |
 // ---
 const Dice = require('./dice');
+const Tile = require("./tile");
+const { is } = require('./utils');
 
 class Game {
   constructor(options) {
-    const { players, gameboard, bank, mapType = "plain" } = options;
+    const { lots, players, gameboard, bank, mapType = "plain" } = options;
 
     this._players = players;
     this._gameboard = gameboard;
@@ -48,11 +50,13 @@ class Game {
     this._dice = new Dice();
     this._players = players;
     this._currentPlayer = 0;
+
+    this.init(lots);
   }
 
-  init() {
+  init(lots) {
     // setup the board when the game is initialised.
-    this.setupBoard();
+    this.setupBoard(lots);
     this.disburseCash();
 
     return [
@@ -65,7 +69,7 @@ class Game {
     return this._bank;
   }
 
-  setupBoard() {
+  setupBoard(lots) {
     const gameBoard = this._gameboard;
     const bankProperties = this._bank.getProperties();
 
@@ -75,11 +79,23 @@ class Game {
       const [x,y] = property.getPosition();
       gameBoard[x][y] = property;
     }
+
+    for(let lot of lots) {
+      if (is("array", lot.position[0])) {
+        for (let position of lot.position) {
+          const [x, y] = position;
+          this._gameboard[x][y] = new Tile(lot);
+        }
+      } else {
+        const [x,y] = lot.position;
+        this._gameboard[x][y] = new Tile(lot);
+      }
+    }
   }
 
   getPropertyAtPosition(position) {
     const [x,y] = position;
-    return gameBoard[x][y];
+    return this._gameboard[x][y];
   }
 
   getGameboard() {

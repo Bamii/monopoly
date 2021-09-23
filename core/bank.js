@@ -44,7 +44,7 @@ module.exports = class Bank {
 
     // setup properties.
     Array.from(properties).forEach(property => {
-      this._properties.push(new Property(property));
+      this._properties.push(new Property(property, this));
     });
 
     // setup wildcards.
@@ -81,5 +81,9 @@ module.exports = class Bank {
   payPlayer(player, amount) {
     this.remitCash(amount);
     player.receiveCash(amount);
+  }
+
+  removeProperty() {
+
   }
 }

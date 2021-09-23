@@ -1,0 +1,42 @@
+game-op format
+-> game-op nickname JSON.stringify(operation) 
+
+roll-dice
+-> {
+  action: 'dice-roll',
+  origin: 'person', ?
+  payload: 4
+}
+
+purchase
+-> {
+  action: 'purchase',
+  origin: 'person', ?
+  payload: null
+}
+
+next-turn
+-> {
+  action: 'next-turn',
+  origin: 'person'
+}
+
+income-tax
+->{
+  action: 'income-tax',
+  origin: 'person',
+  payload: 'flat' || 'percent'
+}
+
+chance & community
+-> {
+  action: 'wildcard',
+  origin: 'person',
+  payload: {
+    type: 'chance' || 'community-chest',
+    operation: {
+
+    }
+  }
+}
+

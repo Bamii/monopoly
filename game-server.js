@@ -1,3 +1,11 @@
+// -----
+// Monopoly game
+// - Ayobami Ayo-Salami
+// - @bbamii
+// -----
+// game-server.js
+// ---
+
 const ws = require("ws");
 
 class GS {
@@ -7,14 +15,17 @@ class GS {
     this._ACK_COUNTER = 0;
 
     this._server.on("listening", function() {
-      console.log("Welcome to Mission Control!!")
-      console.log()
+      console.log("--------------------------------")
+      console.log("| Welcome to Mission Control!! |")
+      console.log("--------------------------------")
     })
 
     this._server.on('connection', (ws) => {
       ws.on('message', (data) => {
         let [action, ...message] = data.split(" ");
 
+        console.log("--server-- ", data);
+        console.log();
         switch (action) {
           case "init-dice-roll":
             let [nickname, dice] = message;
@@ -34,8 +45,7 @@ class GS {
             break;
 
           case "game-op":
-            let b =  message[0];
-            this.broadcast(data, b)
+            this.broadcast(data, message[0])
             break;
         
           default:

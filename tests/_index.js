@@ -1,5 +1,7 @@
 let be = true;
 
+console.log("start")
+
 while(go()) {
   console.log('isj')
   setTimeout(() => {

@@ -47,50 +47,55 @@
 //    - getDevelopments.
 //    - getMortgageStatus
 
+const Tile = require('./tile');
 const MAX_HOUSE_ON_PROPERTY = 4;
 const { is } = require('./utils');
 
-module.exports = class Property{
-  constructor(options) {
-    const { owner, id, position, type, location_code, title, ...details } = options;
+module.exports = class Property extends Tile {
+  constructor(options, owner) {
+    const { mortgage, position, type, location_details, title, ...details } = options;
+
+    super({ type, position });
 
     this._owner = owner;
-    this._id = id;
     this._title = title;
-    this._location_code = location_code;
+    this._location_details = location_details;
     this._details = details;
-    this._type = type;
+    this._mortgageValue = mortgage;
 
     this._developments = null;
     this._isMortgage = false;
-    this._isForSale = false;                        // i'm not sure what to do with this variable.
-    
-    // in my head, it's looking better than having to traverse the board...
-    // instead, traverse the properties array, and use the positions variable
-    // to place it on the board.
-    // this way, it is deterministic (as is the game... duh?)
-    this._position = position;
+    this._isForSale = false;
   }
 
-  getPosition() {
-    return this._position;
-  }
-
-  calculateRent() {
+  calculateRent(lotSize) {
+    // lotsize is the number of lots the owner owns in a color group. -> properties, station
+    // lotsize is the dice roll -> utility
     const { _type } = this;
 
     switch (_type) {
       case 'property':
-    
-        break;
+        const developments = this.getDevelopments();
+
+        if(developments === null) {
+          if(lotSize === this.getLotSize()) {
+            return this._details.rent.monopoly;
+          }
+          return this._details.rent.base;
+        } else {
+          const [developmentType, developmentCount] = developments;
+          return this._details.rent[developmentType][developmentCount];
+        }
 
       case 'utility':
   
         break;
   
       case 'station':
-  
-        break;
+        if(lotSize === this.getLotSize()) {
+          return this._details.rent.monopoly;
+        } 
+        return this._details.rent.base;
     
       default:
         break;
@@ -179,7 +184,35 @@ module.exports = class Property{
     return this._owner;
   }
 
-  getPrice() {
-    return this._details.price.self;
+  getPrice(type) {
+    return type
+      ? this._details.price[type]
+      : this._details.price.self;
+  }
+
+  getHousePrice() {
+    //  return getPrice('house')
+    return this._details.price.house;
+  }
+  
+  getHotelPrice(){
+    //  return getPrice('hotel')
+    return this._details.price.hotel;
+  }
+
+  getLocationCode() {
+    return this._location_details.code;
+  }
+
+  getLocationColor() {
+    return this._location_details.lot_color;
+  }
+
+  isUtility() {
+    return this._type == "utility";
+  }
+
+  getLotSize() {
+    return this._location_details.lot_size;
   }
 }

@@ -38,13 +38,14 @@
 //    - getPosition() -> <Integer>[x,y]
 //    - getToken() -> Token
 const Dice = require('./dice')
+const { convToMonopolyMoney, convToFlat } = require('./utils');
 
 module.exports = class Player {
   constructor(options) {
     const { name, token } = options;
 
     this._name = name;                      // player name.
-    this._token = token;            // chosen character token.
+    this._token = token;                    // chosen character token.
     this._cash = [];                        // player's cash stash
     this._position = [0,0];                 // two-valued array - [x,y]
     this._properties = [];                  // player's property stash 
@@ -107,18 +108,29 @@ module.exports = class Player {
     ];
   }
 
-  purchase(property, owner){
+  purchase(property){
     const price = property.getPrice();
-    this.remitCash(price);
+    const owner = property.getOwner();
+    const didRemit = this.remitCash(price);
+    if (!didRemit) {
+      return false;
+    }
+
     owner.receiveCash(price);
     property.changeOwner(this);
-    this._properties.push(property);
+    this.addProperty(property);
     owner.removeProperty(property);
 
     // returns boolean to determine if it succeeds.
   }
 
   remitCash(amount) {
+    const monopoly_money_equivalent = convToMonopolyMoney(amount);
+    const playercash = Object
+      .entries(this._cash)
+      .filter(([denomination, count]) => count != 0)
+      .sort((a,b) => b[0] - a[0]);
+    // Array.from(playercash.entries).filter(ca)
     // remove some amount of cash
   }
 
@@ -152,7 +164,23 @@ module.exports = class Player {
 
   }
 
-  payRent(property){}
+  payRent(property, utilityDiceRoll){
+    const propertyOwner = property.getOwner();
+    const numberOfOwnedPropertiesInColor = 
+      propertyOwner
+        .getProperties()
+        .filter(myProperty => myProperty.getLocationCode() == property.getLocationCode())
+        .length;
+
+    const lotSize = utilityDiceRoll ? utilityDiceRoll : numberOfOwnedPropertiesInColor;
+
+    const rent = property.calculateRent(lotSize);
+
+    // validate and return likewise.
+    this.remitCash(rent);
+    propertyOwner.receiveCash(rent);
+  }
+
   develop(property, amount){}
   sell(property, buyer){}
   processMove(property){}
@@ -168,5 +196,17 @@ module.exports = class Player {
 
   getPosition(){
     return this._position;
+  }
+
+  getProperties() {
+    return this._properties;
+  }
+
+  removeProperty() {
+
+  }
+
+  addProperty() {
+
   }
 }
